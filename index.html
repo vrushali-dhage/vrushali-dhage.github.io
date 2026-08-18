@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vrushali Dhage — DevOps &amp; Cloud Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0d10;
+    --bg-panel:#10151a;
+    --border:#1f2932;
+    --text:#dbe4ea;
+    --text-dim:#6b7c8a;
+    --accent:#3ddc84;
+    --accent-dim:#245c3f;
+    --accent2:#5fb0ff;
+    --amber:#e8a23d;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+  }
+  ::selection{background:var(--accent-dim);color:var(--accent);}
+
+  a{color:var(--accent2);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .mono{font-family:var(--mono);}
+
+  /* ---------- top nav ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(10,13,16,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner{
+    max-width:1080px;margin:0 auto;padding:16px 24px;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .logo{font-family:var(--mono);font-weight:800;letter-spacing:.5px;color:var(--text);font-size:15px;}
+  .logo span{color:var(--accent);}
+  nav ul{list-style:none;display:flex;gap:28px;}
+  nav a{
+    font-family:var(--mono);font-size:12.5px;color:var(--text-dim);
+    text-transform:lowercase;letter-spacing:.3px;
+  }
+  nav a:hover{color:var(--accent);text-decoration:none;}
+  @media (max-width:720px){ nav ul{gap:14px;flex-wrap:wrap;justify-content:flex-end;} }
+
+  /* ---------- hero ---------- */
+  .hero{
+    max-width:1080px;margin:0 auto;padding:90px 24px 60px;
+  }
+  .hero-eyebrow{
+    font-family:var(--mono);font-size:12px;color:var(--accent);
+    letter-spacing:2px;text-transform:uppercase;margin-bottom:18px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .hero-eyebrow::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--accent);
+    box-shadow:0 0 8px var(--accent); animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+
+  h1{
+    font-family:var(--mono);font-weight:800;
+    font-size:clamp(32px,6vw,56px);
+    letter-spacing:-1px;color:var(--text);line-height:1.1;
+  }
+  h1 .accent{color:var(--accent);}
+  .role-line{
+    font-family:var(--mono);color:var(--text-dim);font-size:clamp(14px,2vw,18px);
+    margin-top:14px;
+  }
+  .role-line b{color:var(--text);font-weight:600;}
+  .hero-desc{
+    max-width:640px;color:var(--text-dim);font-size:15.5px;margin-top:20px;
+  }
+  .hero-actions{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;}
+  .btn{
+    font-family:var(--mono);font-size:13px;padding:11px 20px;border-radius:6px;
+    border:1px solid var(--border);display:inline-flex;align-items:center;gap:8px;
+  }
+  .btn-primary{background:var(--accent);color:#04150a;font-weight:700;border-color:var(--accent);}
+  .btn-primary:hover{background:#4ee893;text-decoration:none;}
+  .btn-ghost{color:var(--text);}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent);text-decoration:none;}
+
+  /* terminal card */
+  .terminal{
+    margin-top:48px;background:var(--bg-panel);border:1px solid var(--border);
+    border-radius:10px;overflow:hidden;
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.6);
+  }
+  .term-bar{
+    display:flex;align-items:center;gap:8px;padding:10px 14px;
+    background:#0d1216;border-bottom:1px solid var(--border);
+  }
+  .dot{width:10px;height:10px;border-radius:50%;}
+  .dot.r{background:#ff5f56;} .dot.y{background:#ffbd2e;} .dot.g{background:#27c93f;}
+  .term-title{margin-left:8px;font-family:var(--mono);font-size:11.5px;color:var(--text-dim);}
+  .term-body{padding:20px 22px;font-family:var(--mono);font-size:13px;color:var(--text-dim);}
+  .term-body .line{margin-bottom:6px;white-space:pre-wrap;}
+  .term-body .prompt{color:var(--accent);}
+  .term-body .path{color:var(--accent2);}
+  .term-body .out{color:var(--text);}
+  .caret{display:inline-block;width:7px;height:14px;background:var(--accent);margin-left:2px;
+    animation:blink 1s step-start infinite;vertical-align:middle;}
+  @keyframes blink{50%{opacity:0;}}
+
+  /* stat strip */
+  .stats{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+    background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;
+    margin-top:36px;
+  }
+  .stat{background:var(--bg-panel);padding:20px 14px;text-align:center;}
+  .stat b{display:block;font-family:var(--mono);font-size:22px;color:var(--accent);}
+  .stat span{font-size:11px;color:var(--text-dim);font-family:var(--mono);letter-spacing:.4px;}
+  @media (max-width:640px){.stats{grid-template-columns:repeat(2,1fr);}}
+
+  /* ---------- sections ---------- */
+  section{max-width:1080px;margin:0 auto;padding:64px 24px;border-top:1px solid var(--border);}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:34px;}
+  .sec-num{font-family:var(--mono);color:var(--text-dim);font-size:13px;}
+  .sec-title{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--text);}
+  .sec-tag{font-family:var(--mono);font-size:11.5px;color:var(--accent);letter-spacing:1px;
+    text-transform:uppercase;margin-left:auto;}
+
+  /* about */
+  .about-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;}
+  @media (max-width:760px){.about-grid{grid-template-columns:1fr;}}
+  .about-text p{color:var(--text-dim);font-size:15px;margin-bottom:14px;}
+  .about-text b{color:var(--text);}
+  .facts{border:1px solid var(--border);border-radius:10px;padding:20px;background:var(--bg-panel);}
+  .fact-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px dashed var(--border);
+    font-family:var(--mono);font-size:12.5px;}
+  .fact-row:last-child{border-bottom:none;}
+  .fact-row span:first-child{color:var(--text-dim);}
+  .fact-row span:last-child{color:var(--text);text-align:right;}
+
+  /* skills */
+  .skill-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media (max-width:760px){.skill-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:520px){.skill-grid{grid-template-columns:1fr;}}
+  .skill-card{border:1px solid var(--border);border-radius:10px;padding:18px;background:var(--bg-panel);}
+  .skill-card h4{font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;
+    letter-spacing:1px;margin-bottom:12px;}
+  .chip-row{display:flex;flex-wrap:wrap;gap:6px;}
+  .chip{font-family:var(--mono);font-size:11.5px;padding:4px 9px;border:1px solid var(--border);
+    border-radius:5px;color:var(--text-dim);background:#0d1216;}
+
+  /* experience */
+  .job{border:1px solid var(--border);border-radius:10px;background:var(--bg-panel);margin-bottom:18px;overflow:hidden;}
+  .job-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;
+    justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+  .job-path{font-family:var(--mono);font-size:12px;color:var(--text-dim);}
+  .job-path .company{color:var(--accent2);}
+  .badge{font-family:var(--mono);font-size:10.5px;padding:3px 8px;border-radius:20px;
+    background:rgba(61,220,132,.12);color:var(--accent);border:1px solid var(--accent-dim);}
+  .job-body{padding:18px 20px;}
+  .job-title{font-weight:700;color:var(--text);font-size:15.5px;}
+  .job-meta{font-family:var(--mono);font-size:12px;color:var(--text-dim);margin-top:2px;margin-bottom:14px;}
+  .job-body ul{padding-left:18px;}
+  .job-body li{color:var(--text-dim);font-size:13.8px;margin-bottom:8px;}
+  .job-body li::marker{color:var(--accent);}
+  .job-body li b{color:var(--text);font-weight:600;}
+
+  /* projects */
+  .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media (max-width:760px){.proj-grid{grid-template-columns:1fr;}}
+  .proj{border:1px solid var(--border);border-radius:10px;background:var(--bg-panel);overflow:hidden;
+    display:flex;flex-direction:column;}
+  .proj-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;
+    justify-content:space-between;align-items:center;}
+  .proj-path{font-family:var(--mono);font-size:12px;color:var(--text-dim);}
+  .proj-body{padding:18px;flex:1;display:flex;flex-direction:column;}
+  .proj-body h3{font-size:15.5px;color:var(--text);margin-bottom:4px;}
+  .proj-date{font-family:var(--mono);font-size:11px;color:var(--text-dim);margin-bottom:12px;}
+  .proj-body p{color:var(--text-dim);font-size:13.6px;margin-bottom:16px;flex:1;}
+  .proj-body p b{color:var(--text);}
+  .proj-link{font-family:var(--mono);font-size:12px;margin-top:auto;}
+  .proj-link::before{content:'→ ';color:var(--accent);}
+
+  /* education */
+  .edu{border:1px solid var(--border);border-radius:10px;background:var(--bg-panel);padding:18px 20px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
+  .edu h4{color:var(--text);font-size:14.5px;}
+  .edu p{font-family:var(--mono);font-size:12px;color:var(--text-dim);}
+  .edu .right{font-family:var(--mono);font-size:12px;color:var(--accent);text-align:right;}
+
+  /* contact */
+  .contact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  @media (max-width:760px){.contact-grid{grid-template-columns:1fr 1fr;}}
+  .contact-card{border:1px solid var(--border);border-radius:10px;padding:16px;background:var(--bg-panel);
+    text-align:center;}
+  .contact-card .k{font-family:var(--mono);font-size:10.5px;color:var(--text-dim);text-transform:uppercase;
+    letter-spacing:1px;margin-bottom:6px;}
+  .contact-card .v{font-family:var(--mono);font-size:12.5px;word-break:break-word;}
+
+  footer{max-width:1080px;margin:0 auto;padding:30px 24px 50px;border-top:1px solid var(--border);
+    font-family:var(--mono);font-size:11.5px;color:var(--text-dim);text-align:center;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <div class="logo">VD <span>// DEVOPS</span></div>
+    <nav>
+      <ul>
+        <li><a href="#about">about</a></li>
+        <li><a href="#skills">skills</a></li>
+        <li><a href="#experience">experience</a></li>
+        <li><a href="#projects">projects</a></li>
+        <li><a href="#education">education</a></li>
+        <li><a href="#contact">contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" style="border-top:none;padding-top:70px;">
+  <div class="hero-eyebrow">available for full-time · aug 2026</div>
+  <h1>Vrushali <span class="accent">Dhage</span></h1>
+  <div class="role-line">DevOps &amp; Production Support Engineer <b>/</b> Cloud Infra <b>/</b> CI/CD <b>/</b> Kubernetes</div>
+  <p class="hero-desc">
+    5+ years operating large-scale telecom platforms on AWS, Azure, and on-premises Linux.
+    Kept a Kafka-based streaming system processing 200M+ records/day inside SLA, migrated it
+    to Azure Kubernetes, and more recently built a production-style AWS EKS platform from
+    scratch with Terraform and GitOps.
+  </p>
+  <div class="hero-actions">
+    <a href="#projects" class="btn btn-primary">view projects</a>
+    <a href="#contact" class="btn btn-ghost">get in touch</a>
+  </div>
+
+  <div class="terminal">
+    <div class="term-bar">
+      <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+      <div class="term-title">vrushali@devops — zsh</div>
+    </div>
+    <div class="term-body">
+      <div class="line"><span class="prompt">$</span> whoami</div>
+      <div class="line out">devops_and_production_support_engineer</div>
+      <div class="line"><span class="prompt">$</span> cat stack.txt</div>
+      <div class="line out">AWS · Azure · Terraform · Kubernetes · Docker · Jenkins · Azure DevOps · GitHub Actions · Argo CD · Kafka · Ansible · Prometheus · Grafana · Python · Bash</div>
+      <div class="line"><span class="prompt">$</span> ./deploy-status.sh --env=production</div>
+      <div class="line out">✔ 200M+ records/day held within SLA<br>✔ full EKS environment rebuild in ~16 min<br>✔ CI → CD loop: PR → build → image → GitOps sync</div>
+      <div class="line"><span class="prompt">$</span> <span class="caret"></span></div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b>5+</b><span>YEARS EXPERIENCE</span></div>
+    <div class="stat"><b>200M+</b><span>RECORDS/DAY HANDLED</span></div>
+    <div class="stat"><b>26</b><span>SERVICE MICROSERVICES APP</span></div>
+    <div class="stat"><b>~16m</b><span>FULL EKS REBUILD</span></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="sec-head">
+    <span class="sec-num">01</span>
+    <span class="sec-title">About</span>
+    <span class="sec-tag">summary</span>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a <b>DevOps and Production Support Engineer</b> with 5+ years operating large-scale
+      telecom platforms across AWS, Azure, and on-premises Linux environments. I've spent most
+      of my career keeping high-volume production systems inside SLA — monitoring, incident
+      response, root cause analysis, and the CI/CD automation that prevents the next incident
+      from happening.</p>
+      <p>At <b>Amdocs</b>, I supported the migration of AT&amp;T's Kafka-based mediation platform —
+      <b>200M+ billable records processed per day</b> — from on-premises to Azure Kubernetes
+      Service. Earlier, at <b>Tech Mahindra</b>, I kept that same platform at 24×7 uptime on-prem,
+      leading incident response and RCA under strict SLA windows.</p>
+      <p>I'm currently pursuing an <b>MS in Information Systems at Rider University</b>, and building
+      hands-on cloud infrastructure projects on the side — most recently a production-style
+      AWS EKS microservices platform provisioned entirely with Terraform and deployed via GitOps.</p>
+    </div>
+    <div class="facts">
+      <div class="fact-row"><span>Based in</span><span>Monmouth Junction, NJ</span></div>
+      <div class="fact-row"><span>Status</span><span>Open to full-time, remote &amp; relocation</span></div>
+      <div class="fact-row"><span>Focus</span><span>DevOps / SRE / Cloud Infra</span></div>
+      <div class="fact-row"><span>Cloud</span><span>AWS · Azure</span></div>
+      <div class="fact-row"><span>Currently</span><span>MS Info Systems, Rider Univ.</span></div>
+      <div class="fact-row"><span>Email</span><span>dhagevrushali007@gmail.com</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="sec-head">
+    <span class="sec-num">02</span>
+    <span class="sec-title">Skills &amp; Technologies</span>
+    <span class="sec-tag">stack inventory</span>
+  </div>
+  <div class="skill-grid">
+    <div class="skill-card">
+      <h4>Cloud Platforms</h4>
+      <div class="chip-row">
+        <span class="chip">EC2</span><span class="chip">EKS</span><span class="chip">S3</span>
+        <span class="chip">DynamoDB</span><span class="chip">IAM</span><span class="chip">VPC</span>
+        <span class="chip">CloudWatch</span><span class="chip">AKS</span><span class="chip">Azure VMs</span>
+        <span class="chip">Key Vault</span><span class="chip">Azure Monitor</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h4>IaC &amp; Automation</h4>
+      <div class="chip-row">
+        <span class="chip">Terraform</span><span class="chip">Ansible</span>
+        <span class="chip">Bash</span><span class="chip">Python</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h4>CI/CD &amp; VCS</h4>
+      <div class="chip-row">
+        <span class="chip">Jenkins</span><span class="chip">Azure DevOps</span>
+        <span class="chip">GitHub Actions</span><span class="chip">Git</span><span class="chip">Argo CD</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h4>Containers &amp; Orchestration</h4>
+      <div class="chip-row">
+        <span class="chip">Docker</span><span class="chip">Docker Compose</span>
+        <span class="chip">Kubernetes</span><span class="chip">kubectl</span><span class="chip">Helm</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h4>Monitoring &amp; Reliability</h4>
+      <div class="chip-row">
+        <span class="chip">Prometheus</span><span class="chip">Grafana</span>
+        <span class="chip">Azure Monitor</span><span class="chip">IBM Netcool</span>
+        <span class="chip">RCA</span><span class="chip">On-call</span><span class="chip">SLA Mgmt</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h4>OS, Networking &amp; Data</h4>
+      <div class="chip-row">
+        <span class="chip">Linux/UNIX</span><span class="chip">TCP/IP</span><span class="chip">DNS</span>
+        <span class="chip">Load Balancing</span><span class="chip">Kafka</span><span class="chip">SQL</span>
+        <span class="chip">REST APIs</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="sec-head">
+    <span class="sec-num">03</span>
+    <span class="sec-title">Professional Experience</span>
+    <span class="sec-tag">production record</span>
+  </div>
+
+  <div class="job">
+    <div class="job-head">
+      <span class="job-path">~/experience/<span class="company">amdocs</span></span>
+      <span class="badge">completed</span>
+    </div>
+    <div class="job-body">
+      <div class="job-title">Technology Engineer (DevOps) — AT&amp;T OneMediation (5Gi &amp; OMDS), Azure Cloud</div>
+      <div class="job-meta">Amdocs · Jan 2022 – Jun 2024</div>
+      <ul>
+        <li>Supported the migration of AT&amp;T's mediation platform from on-premises to Azure (OMDS), a Kafka-based streaming system processing <b>200M+ billable MMS/GPRS usage records per day</b> across active AKS regions.</li>
+        <li>Reduced deployment time and improved release consistency across dev, test, and production by implementing and maintaining <b>CI/CD pipelines in Jenkins and Azure DevOps</b> for containerized microservices.</li>
+        <li>Kept high-volume Kafka pipelines within SLA by monitoring consumer lag, error-count alerts, and TPS dashboards in Azure Monitor, then remediating through pod scaling, controlled pod bounces, and kubectl log analysis.</li>
+        <li>Eliminated configuration drift across environments by automating server and application configuration with <b>Ansible playbooks</b>.</li>
+        <li>Maintained platform availability during operational events by executing SSL certificate renewals (Keyfactor/Azure Key Vault), enabler zone failover steps, and Kafka topic/partition tuning per runbooks.</li>
+        <li>Resolved Linux, DNS, connectivity, and port-configuration issues in cloud and on-prem environments, and used AI tools to speed up documentation and troubleshooting.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="job">
+    <div class="job-head">
+      <span class="job-path">~/experience/<span class="company">tech-mahindra</span></span>
+      <span class="badge">completed</span>
+    </div>
+    <div class="job-body">
+      <div class="job-title">Software Engineer — AT&amp;T Mediation, On-Premises</div>
+      <div class="job-meta">Tech Mahindra · Jul 2019 – Jan 2022</div>
+      <ul>
+        <li>Ensured <b>24×7 uptime and SLA compliance</b> for AT&amp;T's mediation platform — collecting raw usage data from upstream network systems and processing, aggregating, and segregating it for downstream billing.</li>
+        <li>Executed code deployments through Jenkins CI/CD across all test environments including UAT, E2E, Performance through to production, coordinating release and change-management activities end-to-end.</li>
+        <li>Minimized outage duration by leading <b>incident response and root cause analysis (RCA)</b> with IBM Netcool monitoring and SQL-based data validation, restoring service within SLA windows.</li>
+        <li>Maintained fleet health and security posture by performing OS patching, database PSU patching, password rotations, and planned failover/failback exercises on Linux/UNIX servers.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="sec-head">
+    <span class="sec-num">04</span>
+    <span class="sec-title">Personal Projects</span>
+    <span class="sec-tag">build log</span>
+  </div>
+  <div class="proj-grid">
+    <div class="proj">
+      <div class="proj-head">
+        <span class="proj-path">~/projects/terraform-aws-eks-infrastructure</span>
+        <span class="badge">deployed</span>
+      </div>
+      <div class="proj-body">
+        <h3>Cloud-Native E-Commerce Microservices Platform on AWS EKS</h3>
+        <div class="proj-date">2026</div>
+        <p>Containerized polyglot microservices (<b>Go, Java, Python, Rust</b>) with multi-stage Docker
+        builds, orchestrating a <b>26-service application</b> locally with Docker Compose. Provisioned
+        production-style AWS infrastructure with <b>Terraform</b> — reusable VPC and EKS modules,
+        remote state on S3 with DynamoDB locking — cutting environment rebuild time to a single
+        <b>~16-minute apply</b>. Deployed EKS workloads with IAM least-privilege roles, and automated
+        build-and-deploy with <b>GitHub Actions and Argo CD (GitOps)</b>, exposing services via ALB
+        Ingress with Route 53 DNS.</p>
+        <div class="chip-row" style="margin-bottom:14px;">
+          <span class="chip">Terraform</span><span class="chip">EKS</span><span class="chip">Docker</span>
+          <span class="chip">GitHub Actions</span><span class="chip">Argo CD</span><span class="chip">Route 53</span>
+        </div>
+        <a class="proj-link" href="https://github.com/vrushali-dhage/terraform-aws-eks-infrastructure" target="_blank" rel="noopener">View on GitHub</a>
+      </div>
+    </div>
+
+    <div class="proj">
+      <div class="proj-head">
+        <span class="proj-path">~/projects/product-catalog-microservice</span>
+        <span class="badge">deployed</span>
+      </div>
+      <div class="proj-body">
+        <h3>CI/CD → GitOps Pipeline for a Kubernetes Microservice</h3>
+        <div class="proj-date">2026</div>
+        <p>Built an end-to-end CI/CD loop for a Go-based product-catalog service: a GitHub Actions
+        pipeline (<b>build → code-quality → docker → k8s manifest update</b>) that builds and pushes
+        a versioned image on every pull request, then <b>Argo CD</b> syncs the updated manifest to an
+        EKS cluster automatically. Proven full loop: <b>PR → CI builds/pushes image → tag committed
+        to git → Argo deploys</b>.</p>
+        <div class="chip-row" style="margin-bottom:14px;">
+          <span class="chip">GitHub Actions</span><span class="chip">Argo CD</span>
+          <span class="chip">Kubernetes</span><span class="chip">GitOps</span><span class="chip">Docker Hub</span>
+        </div>
+        <a class="proj-link" href="https://github.com/vrushali-dhage/product-catalog-microservice" target="_blank" rel="noopener">View on GitHub</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="sec-head">
+    <span class="sec-num">05</span>
+    <span class="sec-title">Education</span>
+    <span class="sec-tag">academic record</span>
+  </div>
+  <div class="edu">
+    <div>
+      <h4>Master of Science, Information Systems</h4>
+      <p>Rider University · Lawrenceville, NJ</p>
+    </div>
+    <div class="right">Jan 2025 – Dec 2026 (expected)</div>
+  </div>
+  <div class="edu">
+    <div>
+      <h4>B.E., Electronics &amp; Telecommunication Engineering</h4>
+      <p>Savitribai Phule Pune University · Pune, India</p>
+    </div>
+    <div class="right">2015 – 2018</div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="sec-head">
+    <span class="sec-num">06</span>
+    <span class="sec-title">Contact</span>
+    <span class="sec-tag">get in touch</span>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <div class="k">Phone</div>
+      <div class="v"><a href="tel:+16196017409">+1 (619) 601-7409</a></div>
+    </div>
+    <div class="contact-card">
+      <div class="k">Email</div>
+      <div class="v"><a href="mailto:dhagevrushali007@gmail.com">dhagevrushali007@gmail.com</a></div>
+    </div>
+    <div class="contact-card">
+      <div class="k">GitHub</div>
+      <div class="v"><a href="https://github.com/vrushali-dhage" target="_blank" rel="noopener">github.com/vrushali-dhage</a></div>
+    </div>
+    <div class="contact-card">
+      <div class="k">LinkedIn</div>
+      <div class="v"><a href="https://linkedin.com/in/vrushali-dhage" target="_blank" rel="noopener">linkedin.com/in/vrushali-dhage</a></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Built by Vrushali Dhage · Monmouth Junction, NJ
+</footer>
+
+</body>
+</html>
